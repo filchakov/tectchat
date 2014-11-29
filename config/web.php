@@ -38,6 +38,14 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+		'urlManager' => array(
+			'enablePrettyUrl' => true,
+			'showScriptName'  => false,
+			'rules'           => array(
+				''      => 'site/index',
+				'login' => 'site/login'
+			),
+		),
     ],
     'params' => $params,
 ];
