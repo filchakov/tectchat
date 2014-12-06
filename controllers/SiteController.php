@@ -7,6 +7,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
+use app\models\Customer;
+use app\models\Message;
 use app\models\ContactForm;
 
 class SiteController extends Controller
@@ -91,6 +93,33 @@ class SiteController extends Controller
 
     public function actionAbout()
     {
+		//$customer = new Message();
+
+		//d38a0QYJ3Z
+		//Message::deleteAll();
+		//$customer = new Message();
+		//$customer->primaryKey = 2; // in this case equivalent to $customer->id = 1;
+		//$customer->attributes = ['name' => 'test'];
+		//$customer->setAttributes(['name' => 1, 'address' => rand(10, 1000)], false);
+		//$customer->save();
+
+		//echo '<pre>';
+		//print_r($customer->save(false));
+		//echo '</pre>';
+
+
+		//$find = Message::findAll(['-uKzKWMtSg-T7-yn9GV_rw']);
+		//$find = Message::deleteAll(['name' => 1]);
+
+
+		//Message::deleteAll();
+		//Message::setUpMapping($db->createCommand(), true);
+
+
+		//echo '<pre>';
+		//print_r($find);
+		//echo '</pre>';
+
         return $this->render('about');
     }
 }

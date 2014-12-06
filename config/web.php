@@ -10,6 +10,9 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'TlPpKLK0AT_9NUSY9MBoznuXAnPPveqb',
+			'parsers' => [
+				'application/json' => 'yii\web\JsonParser',
+			]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -40,12 +43,26 @@ $config = [
         'db' => require(__DIR__ . '/db.php'),
 		'urlManager' => array(
 			'enablePrettyUrl' => true,
-			'showScriptName'  => false,
-			'rules'           => array(
-				''      => 'site/index',
-				'login' => 'site/login'
-			),
+			'enableStrictParsing' => true,
+			'showScriptName' => false,
+			'rules' => [
+				'/' => 'site/index',
+				'PUT,PATCH message/<id>' => 'message/update',
+				'DELETE message/<id>' => 'message/delete',
+				'GET,HEAD message/<id>' => 'message/view',
+				'POST message' => 'message/create',
+				'GET,HEAD message' => 'message/index',
+				'message/<id>' => 'message/options',
+				'message' => 'message/options',
+			],
 		),
+		'elasticsearch' => [
+			'class' => 'yii\elasticsearch\Connection',
+			'nodes' => [
+				['http_address' => '127.0.0.1:9200'],
+				// configure more hosts if you have a cluster
+			],
+		],
     ],
     'params' => $params,
 ];
