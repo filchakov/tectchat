@@ -26,17 +26,16 @@
 	<?php $this->head();?>
 	<link href="assets/css/bootstrap.css" rel="stylesheet"/>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script>
 		var chatApp = angular.module('chatApp', []);
 		chatApp.controller('chatController', function($scope, $http, $timeout) {
 
-			var getAllMessage = function getMessage(){
-				$http.get("/message").success(function (response) {
-					$scope.messages = response;
-				});
-				$timeout(getAllMessage, 3000);
-			}
-			$timeout(getAllMessage, 100);
+			$http.get("/message").success(function (response) {
+				$scope.messages = response;
+				$scope.lastMessage = response[0]['time'];
+				$('.media-list').attr('time', $scope.lastMessage);
+			});
 
 			//Submit message
 			$scope.submit = function(){
@@ -45,6 +44,32 @@
 					});
 			}
 		});
+
+		setInterval(function() {
+			$.get( "message?time="+$('.media-list').attr('time'), function( json ) {
+				if(!$.isEmptyObject(json)){
+					$('.media-list').attr('time', json[0]['time']);
+
+					var html = "";
+					$.each(json, function(key, val)
+					{
+						html += '<li class="media"> ' +
+							'<div class="media-body"> ' +
+							'<div class="media">' +
+							'<div class="media-body">' +
+							'<small class="text-muted">' + val.ip + ' | ' + val.time + ' ' +'</small>' +
+							'<br/>' + val.message + '<hr/>' +
+							'</div>' +
+							'</div>' +
+							'</div>' +
+							'</li>';
+					});
+					$('.media-list').prepend(html);
+				}
+			});
+
+		}, 1000);
+
 	</script>
 
 </head>
@@ -80,11 +105,10 @@
 					<div class="input-group">
 						<form method="get" action="" data-ng-submit="submit()">
 							<input type="text" name="message" data-ng-model="formData.message" class="input-group form-control" placeholder="Enter Message"/>
-                                    <span class="input-group-btn">
-										<input class="btn btn-info" type="submit" value="Submit Form">
-                                    </span>
+							<span class="input-group-btn">
+								<input class="btn btn-info" type="submit" value="Submit Form">
+							</span>
 						</form>
-
 					</div>
 				</div>
 			</div>
