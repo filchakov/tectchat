@@ -1,10 +1,13 @@
-Тестовое задание для hireukrainians.com.ua
+Demo сайта
+http://37.139.47.54/
 
-Технологии используемые:
+Завдання hireukrainians.com.ua
+
+Стек технологій:
 Yii 2 (RESTful)
 AngularJS
 ElasticSearch
 
-Требования для установки:
+Системні вимоги:
 ElasticSearch 1.4
 Java 7
