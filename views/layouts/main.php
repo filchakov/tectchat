@@ -50,14 +50,22 @@
 				if(!$.isEmptyObject(json)){
 					$('.media-list').attr('time', json[0]['time']);
 
+
+//{{message.ip}} | {{message.time | date:'dd.MM.yyyy H:mm:ss'}}
+
 					var html = "";
 					$.each(json, function(key, val)
 					{
+						var now = new Date(val.time);
+						var res = now.toISOString().slice(0,10).replace(/-/g,"");
+
+						console.log(res);
+
 						html += '<li class="media"> ' +
 							'<div class="media-body"> ' +
 							'<div class="media">' +
 							'<div class="media-body">' +
-							'<small class="text-muted">' + val.ip + ' | ' + val.time + ' ' +'</small>' +
+							'<small class="text-muted">' + val.ip + ' | ' + ("0" + now.getDate()).slice(-2) + '.' + now.getMonth() + '.' + now.getFullYear() + ' ' + ("0" + now.getHours()).slice(-2) + ':' + ("0" + now.getMinutes()).slice(-2) + ':' + ("0" + now.getSeconds()).slice(-2) + ' ' +'</small>' +
 							'<br/>' + val.message + '<hr/>' +
 							'</div>' +
 							'</div>' +
@@ -68,7 +76,7 @@
 				}
 			});
 
-		}, 1000);
+		}, 3000);
 
 	</script>
 
